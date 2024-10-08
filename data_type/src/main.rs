@@ -30,4 +30,8 @@ fn main() {
 
     // Boolean
     let is_true:bool = true; // boolean can be true or false and in some cases 1 or 0 respectively
+
+    //Character
+    let a:char = 'a'; // a single unicode character and it is 4 bytes in size
+    println!("The value of a is: {}", a);
 }
