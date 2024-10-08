@@ -14,6 +14,7 @@ fn main() {
 
     //Accessing the values of the tuple
     let x = tup.0; // accessing the value of x in the tuple by destructuring.
+    print!("The value of x is: {}", x);
     println!("The value of x is: {}", tup.0); // accessing the value of x in the tuple
     println!("The value of y is: {}", tup.1); // accessing the value of y in the tuple
     println!("The value of z is: {}", tup.2); // accessing the value of z in the tuple
