@@ -268,5 +268,20 @@ println!("-  --  --  --");
     }
     println!("----------------------------------");
     println!("  ");
-    
+
+    println!("----------------------------------");
+    println!("Loop");
+
+    let mut counter = 0;
+    let result = loop { //loop is an expression that returns a value.
+        println!("Counter is {}", counter);
+        counter += 1;
+        if counter == 5 {
+            // break; //this statement will break the loop when counter is equal to 5.
+            break counter * 3; //this statement will break the loop when counter is equal to 5 and return the value of counter multiplied by 3. without value, it will throw an error.
+        }
+        println!("Printing at second line so counter is {}", counter);
+    };
+    println!("result is {result}"); //prints () because loop is an expression that returns a value.
+    println!("----------------------------------");
 }
