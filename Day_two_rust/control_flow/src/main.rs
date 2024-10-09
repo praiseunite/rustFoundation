@@ -230,6 +230,14 @@ println!("-  --  --  --");
         println!("x is {}", x);
         x += 1;
     }
+
+    let mut y = 10;
+
+    while y != 0{
+        println!("y is {}", y);
+        y -= 1;
+    }
+    println!("y is now 0");
     println!("----------------------------------");
     println!("  ");
 
