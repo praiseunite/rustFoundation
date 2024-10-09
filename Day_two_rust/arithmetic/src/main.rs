@@ -40,7 +40,7 @@ fn main() {
     let x : i32 = 10;
     let y : f64 = 5.0;
     let sum : f64 = x as f64 + y; //casting x to f64 to make it the same data type as y before performing the operation. 
-    //Always go from the smaller data type to the larger data type.
+    //Always go from the smaller data type to the larger data type so as to avoid loss of data as overflow may occur.
     //casting is done by using the as keyword.
     println!("Sum of {} and {} is {}", x, y, sum); 
 
@@ -127,5 +127,5 @@ fn main() {
     let final_result : i32 = result + x; //Using the result of the previous operation in another operation. 
     println!("Result of {} + {} * {} + {} is {}", x, y, z, x, final_result);
     println!("----------------------------------");
-
+    println!("  ");
 }
