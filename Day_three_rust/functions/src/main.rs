@@ -1,8 +1,24 @@
+use std::io;
 fn main() {
     println!("Hello, world!");
     first_function();
     second_function("John");
     adding_numbers(10);
+
+    println!("Enter your name: ");
+
+    let mut name = String::new();
+
+    io::stdin()
+        .read_line(&mut name) 
+        .expect("Failed to read line");
+
+    let name = name.trim();
+
+    greetings(name);
+
+    let result = returning_value(10);
+    println!("The result is {}", result);
 
     //statements and expressions 
     // Statements are instructions that perform some action and do not return a value. 
@@ -40,3 +56,24 @@ fn adding_numbers(x: i32){
     println!("The number is {x}");
     println!("The number is {}", x);
 }
+
+fn returning_value(x: i32) -> i32 {
+    x + 10
+}
+
+//Functions with user interraction
+// Functions can accept input from the user using the std::io module.
+// The std::io module provides the standard input/output functionality for reading and writing data.
+
+fn greetings(name : &str) {
+    println!("Hello, {}", name);
+}
+
+// Function Parameters 
+// Function parameters are defined using the parameter name followed by a colon and the parameter type.
+// The parameter type is optional. If the parameter type is not specified, the parameter type is inferred from the value passed to the function.
+// The parameter type can be any valid Rust type. The parameter type can be a primitive type, a custom type, or a reference type.
+// The parameter type can be a reference type. The reference type is specified using the & symbol followed by the parameter type.
+// The reference type allows the function to access the value passed to the function without taking ownership of the value.
+//example  fn add(x: i32, y: i32) -> i32 {
+//example  fn add(x: i32, y: i32) -> i32 { x + y }  // this is a short form of the function
