@@ -17,24 +17,56 @@ fn main() {
 
     greetings(name);
 
-    let result = returning_value(10);
-    println!("The result is {}", result);
+    // let result = returning_value(10);
+    // println!("The result is {}", result);
 
     //statements and expressions 
     // Statements are instructions that perform some action and do not return a value. 
     // Expressions are instructions that perform some action and return a value. 
     // In Rust, expressions do not end with a semicolon and statements end with a semicolon.
     // If an expression ends with a semicolon, it becomes a statement and does not return a value.
-    let x = 10; // statement 
-    let y = 20; // statement 
-    let z = x + y; // expression 
-    let a = { x + y }; // expression 
-    let b = { x + y; }; // statement  // this will not return a value 
-    let c = { x + y; z }; // statement 
-    println!("The value of z is {}", z); // expression
-    println!("The value of a is {}", a); // expression
-    println!("The value of b is {:?}", b); // statement
+    // let x = 10; // statement 
+    // let y = 20; // statement 
+    // let z = x + y; // expression 
+    // let a = { x + y }; // expression 
+    // let b = { x + y; }; // statement  // this will not return a value 
+    // let c = { x + y; z }; // statement 
+    // println!("The value of z is {}", z); // expression
+    // println!("The value of a is {}", a); // expression
+    // println!("The value of b is {:?}", b); // statement
+
+    let result = fibonacci(10);
+    println!("The result is {}", result);
 }
+
+//Fibonacci sequence  0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55  // 0 + 1 = 1, 1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8, 5 + 8 = 13, 8 + 13 = 21, 13 + 21 = 34, 21 + 34 = 55
+// The Fibonacci sequence is a series of numbers in which each number is the sum of the two preceding numbers.
+// The first two numbers in the Fibonacci sequence are 0 and 1.
+// The Fibonacci sequence is defined by the recurrence relation: F(n) = F(n-1) + F(n-2)
+// The Fibonacci sequence is a recursive sequence because it depends on the previous two numbers in the sequence.
+// The Fibonacci sequence is used in mathematics, computer science, and other fields to model growth and other phenomena.
+// The Fibonacci sequence is named after the Italian mathematician Leonardo Fibonacci who introduced the sequence to the Western world in his book Liber Abaci in 1202.
+// The Fibonacci sequence is a classic example of a recursive sequence in mathematics.
+// The Fibonacci sequence is used in computer science to demonstrate recursion and other concepts.
+
+// Fibonacci sequence using recursion  
+// The Fibonacci sequence can be generated using recursion.
+// Recursion is a programming technique in which a function calls itself to solve a problem.
+// Recursion is used to solve problems that can be broken down into smaller subproblems.
+// Recursion is used to solve problems that have a recursive structure.
+// example of recursion in rust
+
+fn fibonacci(n: u32) -> u32 { 
+    if n == 0 { 
+        return 0; 
+    }
+    if n == 1 {
+        return 1;
+    }
+    fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+// The fibonacci function takes an unsigned 32-bit integer n as a parameter and returns an unsigned 32-bit integer.
 
 // Functions
 // print!("-------------------");
