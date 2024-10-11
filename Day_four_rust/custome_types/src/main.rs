@@ -17,6 +17,18 @@ struct Person {
     is_adult: bool,
 }
 
+impl Person {  //impl is a keyword that is used to implement methods on a struct type.
+    fn introduce(&self) { //The &self parameter is a reference to the instance of the struct on which the method is called. e.g self.name is the name of the instance of the struct.
+        println!("Hi, my name is {} and I am {} years old.", self.name, self.age);
+    }
+}
+
+//tuples are a way to group together multiple values of different types into a single unit called a tuple type in Rust.
+// tuples struct is a way to create a custom data type in Rust. A tuple struct is a way to group related data together into a single unit called a tuple struct type in Rust.
+
+#[derive(Debug)] //The derive(Debug) annotation is used to automatically implement the Debug trait for the Color tuple struct. The Debug trait is used to print the value of the Color tuple struct using the {:?} format specifier.
+struct Color(i32, i32, i32);
+
 fn main() {
 
     //creating an instance of the Person struct
@@ -54,6 +66,19 @@ fn main() {
     println!("Name: {}", student1.name);
     println!("Age: {}", student1.age);
     println!("Is Adult: {}", student1.is_adult);
+
+
+    //calling the introduce method on the person instance
+    person.introduce();
+    student.introduce();
+    student1.introduce();
+
+    //creating an instance of the Color tuple struct
+    let color = Color(255, 0, 0); //red color
+    println!("Red: {}, Green: {}, Blue: {}", color.0, color.1, color.2);
+    println!("the value {:?}", color);
+
+
 
 }
 
