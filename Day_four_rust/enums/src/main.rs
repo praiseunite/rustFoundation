@@ -32,6 +32,29 @@ fn match_message(msg: Message){
     }
 }
 
+//option is a type that represents an optional value.
+//option is a type that represents a value that may or may not be present.
+
+//The Option enum has two variants: Some and None. 
+//The Some variant holds a value, while the None variant does not hold a value and represents the absence of a value.
+//The Option enum is used to handle the case where a value may or may not be present.
+
+fn get_value(x: i32) -> Option<i32>{
+    if x % 2 == 0{
+        Some(x)
+    }else{
+        None
+    }
+}
+
+fn safe_divide(x: i32, y: i32) -> Option<f32>{
+    if y == 0{
+        None
+    }else{
+        Some(x as f32 /y as f32)
+    }
+}
+
 fn main() {
 
     //creating an instance of the Message enum
@@ -54,4 +77,40 @@ fn main() {
     match_message(msg3);
     match_message(msg4);
 
+    //calling the get_value function
+    println!("Calling the get_value function");
+    let x = 10;
+    match get_value(x){
+        Some(value) => println!("The value is {}", value),
+        None => println!("The value is None"),
+    }
+
+    let y = 15; //odd number
+    match get_value(y){
+        Some(value) => println!("The value is {}", value),
+        None => println!("The value is None"),
+    }
+
+    //calling the safe_divide function
+    println!("Calling the safe_divide function");
+    let x = 10;
+    let y = 2;
+    match safe_divide(x, y){
+        Some(value) => println!("The result is {}", value),
+        None => println!("Cannot divide by zero"),
+    }
+
+    // This is used when you want to use the switch/pattern statement and it gives you a meassage. You can as well, declear the pattern in the main or outside as a method.
+    let x = 10;
+    let y = 0;
+    match safe_divide(x, y){
+        Some(value) => println!("The result is {}", value),
+        None => println!("Cannot divide by zero"), //Cannot divide by zero is printed out because we cannot divide by zero.
+    }
+
+    let result = safe_divide(10, 2);
+    println!("{:?}", result); //Some(5.0) is printed out because 10 divided by 2 is 5. 
+
+    let result = safe_divide(10, 0); 
+    println!("{:?}", result); //None is printed out because we cannot divide by zero.
 }
