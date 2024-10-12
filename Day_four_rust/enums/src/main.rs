@@ -55,6 +55,17 @@ fn safe_divide(x: i32, y: i32) -> Option<f32>{
     }
 }
 
+//Unit type is a type that has only one value, which is an empty tuple (). The unit type is used to represent the absence of a value. 
+//The unit type is used when you want to return a value that does not have any meaningful information. 
+//The unit type is used to represent the absence of a value. 
+
+fn unit_type() -> (){
+    ()
+}
+
+//trait is a way to define a set of methods that a type must implement. 
+//e.g the Debug trait is used to print the value of a type using the {:?} format specifier.
+
 fn main() {
 
     //creating an instance of the Message enum
@@ -113,4 +124,9 @@ fn main() {
 
     let result = safe_divide(10, 0); 
     println!("{:?}", result); //None is printed out because we cannot divide by zero.
+
+    //calling the unit_type function
+    println!("Calling the unit_type function");
+    let result = unit_type(); //() is printed out because the unit type is used to represent the absence of a value.
+
 }
