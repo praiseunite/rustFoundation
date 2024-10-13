@@ -25,16 +25,17 @@ struct Snake {
 }
 
 impl Snake {
-    fn new(x: u32, y: u32) -> Snake {
+    fn new(x: u32, y: u32) -> Self {
         let mut body = LinkedList::new();
-        body.push_back([x, y]);
+        body.push_back([x, y]); // Start with a single segment at position (x, y)
+
         Snake {
             body,
-            dir: Direction::Right,
+            dir: Direction::Right, // Initial direction
         }
     }
 
-    fn move_forward(&mut self) {
+    fn move_forward(&mut self, ate_food: bool) {
         let head = self.body.front().unwrap();
         let mut new_head = *head;
 
@@ -62,21 +63,26 @@ impl Snake {
         }
 
         self.body.push_front(new_head);
-        self.body.pop_back();
+
+        if !ate_food {
+            self.body.pop_back();
+        }
     }
 
     fn grow(&mut self) {
-        let tail = self.body.back().unwrap();
-        self.body.push_back(*tail);
+        // We don't pop the tail, effectively growing the snake
     }
 
     fn check_collision(&self) -> bool {
         let head = self.body.front().unwrap();
-        for part in self.body.iter().skip(1) {
-            if part == head {
+
+        // Check for collisions with the snake's body (ignoring the head)
+        for segment in self.body.iter().skip(1) {
+            if head == segment {
                 return true;
             }
         }
+
         false
     }
 }
@@ -100,6 +106,7 @@ impl Food {
         self.y = rng.gen_range(0..HEIGHT);
     }
 }
+
 fn main() {
     let mut window: PistonWindow = WindowSettings::new(
         "Snake Game",
@@ -112,7 +119,7 @@ fn main() {
     let assets = find_folder::Search::ParentsThenKids(3, 3)
         .for_folder("assets")
         .unwrap();
-    let ref font = assets.join("FiraSansCondensed-Italic.ttf"); // You need a .ttf file
+    let ref font = assets.join("FiraSansCondensed-Italic.ttf");
     println!("Loading font from: {:?}", font.display());
 
     // Create the texture context from the window
@@ -136,11 +143,22 @@ fn main() {
                     game_started = true;
                 }
             } else {
+                // Change direction based on key press
                 snake.dir = match key {
                     Key::Up if snake.dir != Direction::Down => Direction::Up,
                     Key::Down if snake.dir != Direction::Up => Direction::Down,
                     Key::Left if snake.dir != Direction::Right => Direction::Left,
                     Key::Right if snake.dir != Direction::Left => Direction::Right,
+                    Key::Return if game_over => {
+                        // Reset the game when "Enter" is pressed after game over
+                        snake = Snake::new(WIDTH / 2, HEIGHT / 2);
+                        food = Food::new();
+                        game_over = false;
+                        food_eaten = 0;
+                        speed = INITIAL_SPEED;
+                        game_started = true;
+                        snake.dir // Return the current snake direction
+                    }
                     _ => snake.dir,
                 };
             }
@@ -199,48 +217,36 @@ fn main() {
         event.update(|args| {
             if game_started && !game_over {
                 if last_update >= speed {
-                    // Move the snake forward
-                    snake.move_forward();
-        
-                    // Get the current head position
-                    let head = snake.body.front().unwrap(); // Immutable borrow occurs here
-                    let head_x = head[0]; // Store the head's x coordinate
-                    let head_y = head[1]; // Store the head's y coordinate
-        
-                    // Check if the snake eats food
-                    if head_x == food.x && head_y == food.y {
-                        food.respawn(); // Respawn food without growing the snake
+                    let head = snake.body.front().unwrap().clone();
+                    let head_x = head[0];
+                    let head_y = head[1];
+
+                    let ate_food = head_x == food.x && head_y == food.y;
+
+                    // Move the snake forward and check if it ate food
+                    snake.move_forward(ate_food);
+
+                    // If food is eaten, respawn it and grow the snake
+                    if ate_food {
+                        food.respawn();
                         food_eaten += 1;
-        
-                        // Print the head position and food position
-                        println!("Snake Head: {:?}", head);
-                        println!("Food Position: ({}, {})", food.x, food.y);
-        
+                        snake.grow();
+
                         // Increase speed every 4 foods eaten
                         if food_eaten % 4 == 0 {
-                            speed = (speed - 0.02).max(0.05); // Decrease speed to increase difficulty
+                            speed = (speed - 0.02).max(0.05);
                         }
                     }
-        
+
                     // Check for collisions with the snake or the walls
                     if snake.check_collision() || head_x >= WIDTH || head_y >= HEIGHT {
-                        game_over = true; // End game if snake collides
+                        game_over = true;
                     }
-        
-                    last_update = 0.0; // Reset last_update time
+
+                    last_update = 0.0;
                 }
-                last_update += args.dt; // Accumulate time for the next update
-            } else if game_over && game_started {
-                if let Some(Button::Keyboard(Key::Return)) = event.press_args() {
-                    // Restart the game
-                    snake = Snake::new(WIDTH / 2, HEIGHT / 2);
-                    food = Food::new();
-                    game_over = false;
-                    food_eaten = 0;
-                    speed = INITIAL_SPEED;
-                }
+                last_update += args.dt;
             }
         });
-        
     }
 }
